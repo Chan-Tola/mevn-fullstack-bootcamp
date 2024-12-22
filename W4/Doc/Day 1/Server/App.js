@@ -1,23 +1,21 @@
 const express = require("express");
-
 const app = express();
+const path = require("path");
+const {
+  login,
+  book,
+  CheckRequest,
+  CheckLogin,
+} = require("./Route/DataRouting");
 
-app.get("/", (req, res) => {
-  res.send("Path get");
-});
-app.get("/api", (req, res) => {
-  res.send("Path get/api request");
-});
-app.post("/post", (req, res) => {
-  res.send("Path post");
-});
-app.put("/put", (req, res) => {
-  res.send("Path put");
-});
-app.delete("/delete", (req, res) => {
-  res.send("Path delete");
-});
+// create static file for generating htmlfile to web server
+app.use(express.static(path.resolve(__dirname, "../client/dist")));
 
-app.listen(3000, () => {
-  console.log("listening on port 3000");
+// This the way we use the routing
+app.use("/book", [CheckRequest, CheckLogin], book);
+app.use("/login", [CheckRequest, CheckLogin], login);
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`${port}`);
 });

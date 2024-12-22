@@ -132,3 +132,15 @@ npm run dev
 ```
 
 Nodemon will monitor your files for changes, and whenever you save changes to your code, it will automatically restart the server, providing you with hot-reloading functionality during development.
+
+## Serving frontend code from backend 
+This is the way we can saving code from frontend that we can use backend for both cod it handling the frontend and 
+backend code.
+
+### 1: Compiles and minifies for production
+run this code to the client folder
+```
+npm run build
+```
+### 2: Make the dist folder to the static file
+so we need to make it into static files for client can see the style or file js on the server
