@@ -1,12 +1,10 @@
-import mongoose from "mongoose";
-const { userSchema } = require("./User");
-const schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const tweetSchema = new Schema({
-  byUser: userSchema,
-  text: { type: String, require: true },
+const tweetSchema = new mongoose.Schema({
+  text:String,
+  byUser: { type: mongoose.Types.ObjectId, ref: "User" },
   createDate: { type: Date, require: true },
 });
 
-const tweetModel = mongoose.model("tweetModel", tweetSchema);
-module.exports = { tweetModel, tweetSchema };
+const Tweet = mongoose.model("Tweet", tweetSchema);
+module.exports = Tweet;

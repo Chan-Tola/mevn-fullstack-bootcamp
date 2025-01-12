@@ -1,7 +1,5 @@
-import mongoose from "mongoose";
-const schema = mongoose.Schema;
-
-const userSchema = new Schema({
+const mongoose = require("mongoose");
+const userSchema = new mongoose.Schema({
   email: { type: String, require: true, unique: true },
   username: String,
   dataofBirth: Date,
@@ -11,6 +9,6 @@ const userSchema = new Schema({
   tweets: [],
 });
 
-const userModel = mongoose.model("userModel", userSchema);
+const User = mongoose.model("User", userSchema);
 
-module.exports = { userModel, userSchema };
+module.exports = User;
