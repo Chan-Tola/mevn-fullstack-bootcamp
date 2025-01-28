@@ -27,23 +27,71 @@
     </section>
 
     <!-- Action Buttons -->
-    <section class="flex flex-1 flex-col h-full space-y-60 mt-auto">
+    <section class="flex flex-1 flex-col h-full space-y-36 mt-4 relative">
       <button
         class="w-full bg-blue-500 rounded-full text-white font-semibold capitalize p-3 text-lg hover:bg-blue-600 transition duration-300"
       >
         Post
       </button>
       <button
-        class="w-full bg-gray-800 rounded-full text-white font-medium capitalize p-3 text-lg hover:bg-gray-700 transition duration-300"
+        @click.prevent="handleShowLogout"
+        class="w-full flex items-center relative gap-3 rounded-full text-white font-medium capitalize p-3 hover:bg-gray-700 transition duration-300"
       >
-        Account
+        <!-- logo -->
+        <img
+          src="https://i.pinimg.com/736x/1b/e0/08/1be008c3abf1282d28255c11de1de21b.jpg"
+          class="h-10 w-10 rounded-full object-cover"
+          alt="logo"
+        />
+        <!-- User Details -->
+        <div class="flex flex-col text-left">
+          <!-- Display Name -->
+          <span class="font-bold text-base leading-tight">{{ user.name }}</span>
+          <!-- Username -->
+          <p class="text-sm text-gray-400">{{ user.username }}</p>
+        </div>
+      </button>
+      <button
+        v-if="isLogout"
+        @click.prevent="handleLogout"
+        class="text-white -top-10 rounded-xl w-full py-4 left-0 text-start absolute border"
+      >
+        <div
+          class="w-full h-1/2 font-bold hover:bg-gray-300 hover:text-black p-4 transition duration-300"
+        >
+          Log Out {{ user.username }}
+        </div>
       </button>
     </section>
   </main>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import logo from "../assets/logo-removebg-preview.png";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../Store/User";
+const route = useRouter();
+const UserStore = useUserStore();
+defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+});
+const isLogout = ref(false);
+const handleShowLogout = () => {
+  isLogout.value = !isLogout.value;
+  console.log(isLogout.value);
+};
+const handleLogout = () => {
+  const checking = UserStore.logOut();
+  if (checking) {
+    console.log("still  have value");
+  } else {
+    route.push("/");
+  }
+};
 const dataLists = [
   {
     lists: [

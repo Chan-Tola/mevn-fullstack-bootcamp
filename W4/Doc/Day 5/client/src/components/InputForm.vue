@@ -93,9 +93,6 @@
       v-if="isLoading"
       class="flex justify-center absolute top-1/2 left-1/2 items-center mt-4"
     >
-      <!-- <div
-        class="spinner-border animate-spin inline-block w-10 h-10 border-4 border-blue-500 rounded-full"
-      ></div> -->
       <div
         class="animate-spin spinner-border inline-block w-10 h-10 border-4 border-t-white border-blue-500 rounded-full"
       ></div>
@@ -141,8 +138,8 @@ const clearInput = () => {
 };
 
 // handler toat notify
-const notify = (findUser) => {
-  if (findUser) {
+const notify = (filterUser) => {
+  if (filterUser) {
     toast("success", {
       theme: "colored",
       type: "success",
@@ -151,7 +148,7 @@ const notify = (findUser) => {
       dangerouslyHTMLString: true,
     });
   } else {
-    toast("try again", {
+    toast("User not found", {
       theme: "colored",
       type: "error",
       position: "top-center",
@@ -166,18 +163,15 @@ const submitLogin = async () => {
   if (email.value && password.value) {
     isLoading.value = true; // Start loading
     try {
-      const findUser = UserStore.Users.find(
-        (i) => i.email === email.value && i.password === password.value
-      );
       // Simulate an API call or validation
+      const filterUser = UserStore.login(email.value, password.value);
       await new Promise((resolve) =>
-        setTimeout(resolve, 1000, notify(findUser))
+        setTimeout(resolve, 1000, notify(filterUser))
       ); // Mock async operation
       clearInput();
-      if (findUser) {
+      if (filterUser) {
         await router.push("/home"); // Navigate to the home page
-
-        console.log(findUser);
+        console.log(UserStore.authToken);
       } else {
         console.log("User not found!");
       }

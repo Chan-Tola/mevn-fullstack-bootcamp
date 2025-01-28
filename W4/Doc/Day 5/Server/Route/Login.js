@@ -6,7 +6,7 @@ const {
   postAllLogin,
   deleteAllLogin,
   putAllLogin,
-} = require("../Controller/Login/LoginController");
+} = require("../Controller/LoginController");
 Route.get("/", getAllLogin);
 Route.get("/:id", getAllLoginWithParam);
 Route.put("/", putAllLogin);
